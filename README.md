@@ -1,3 +1,3 @@
 # Battleship
 
-Hello, how are you.
+Hello.
