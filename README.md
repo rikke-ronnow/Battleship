@@ -1,4 +1,3 @@
 # Battleship
 
-Hello, how are you
-This is a repository.
+Hello, how are you.
