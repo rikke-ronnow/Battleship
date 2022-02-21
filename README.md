@@ -1,4 +1,6 @@
 # Battleship
 
-Hello, how are you.
-Conflict
+
+
+Hello.
+
