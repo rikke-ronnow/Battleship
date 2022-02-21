@@ -1,6 +1,4 @@
 # Battleship
 
-
-
-Hello.
+## Intro
 
