@@ -42,7 +42,7 @@ class Ship:
     def add(self,s,p,o):
         self.__size.append(s)
         self.__pos.append(p)
-        self.__orient.append(p)
+        self.__orient.append(o)
         self.__hits.append(0)
         return self
     
@@ -51,39 +51,56 @@ def coordinates(ship):
     size=ship.size()
     position=ship.pos()
     orientation=ship.orient()
-        
+    xcoordinates=np.array([])
+    ycoordinates=np.array([])   
+
+    
     if orientation=="Horizontal":
-        xcoordinates=[]
-        ycoordinates=[]
-            
         for i in range(size):
             xcoord=position[0]+i
             ycoord=position[1]
-            xcoordinates.append(xcoord)
-            ycoordinates.append(ycoord)
+            xcoordinates=np.append(xcoordinates,xcoord)
+            ycoordinates=np.append(ycoordinates,ycoord)
             
-    if orientation=="Vertical":
-        xcoordinates=[]
-        ycoordinates=[]
-            
+    elif orientation=="Vertical":    
         for i in range(size):
             xcoord=position[0]
-            ycoord=position[1]
-            xcoordinates.append(xcoord)
-            ycoordinates.append(ycoord)
+            ycoord=position[1]+i
+            xcoordinates=np.append(xcoordinates,xcoord)
+            ycoordinates=np.append(ycoordinates,ycoord)
             
     else:
         xcoordinates=position[0]
-        ycoordinates=position[1]
-                
-    return xcoordinates,ycoordinates
+        ycoordinates=position[1]         
+    return xcoordinates.astype(int),ycoordinates.astype(int)
     
-        
-def guess(position):
-    def __init__(self, position=np.array([0.0,0.0])):
-        self.__pos=[position]
 
-    def hit(self):
-        for coord in ship.coordinates():
-            if self.__pos==coord:
-                return 1
+def add_ships(board,xcoordinates,ycoordinates):
+    for i in range(xcoordinates.size):
+        board[xcoordinates[i],ycoordinates[i]]=1
+        
+def guess(board,guess):
+    if board[guess[0],guess[1]]!=0:
+        board[guess[0],guess[1]]=1
+        return True
+    else:
+        return False
+        
+#%%
+
+ship=Ship()
+
+xcoord,ycoord=coordinates(ship)
+        
+add_ships(Board_player,xcoord,ycoord)
+
+ship.add(3,np.array([2,1]),"Vertical")
+
+xcoord,ycoord=coordinates(ship)
+        
+add_ships(Board_player,xcoord,ycoord)
+print(Board_player)
+        
+        
+        
+        
