@@ -1,4 +1,4 @@
 # Battleship
 
 Hello, how are you
-This is a repository.
+This is the repository for reinforcement learning model of the battleship.
