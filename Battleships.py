@@ -10,9 +10,10 @@ Created on Mon Feb  7 19:00:22 2022
 #sunk, missed, or never been shot
 
 import numpy as np
+import random
 
-Board_player=np.zeros((5,5))
-Board_opponent=np.zeros((5,5))
+ship_board=np.zeros((10,10))
+guess_board=np.zeros((10,10))
 
 class Ship:
     def __init__(self, size=2, position=np.array([0.0,0.0]),orientation="Horizontal",hits=0):
@@ -39,12 +40,21 @@ class Ship:
     def hits(self):
         return self.__hits[-1]
     
+    def updatehits(self):
+        self.__hits=self.__hits+1
+    
     def add(self,s,p,o):
         self.__size.append(s)
         self.__pos.append(p)
         self.__orient.append(o)
         self.__hits.append(0)
         return self
+    
+    def sunk(self):
+        if self.__size==self.__hits:
+            return True
+        else:
+            return False
     
 def coordinates(ship):
         
@@ -77,30 +87,37 @@ def coordinates(ship):
 
 def add_ships(board,xcoordinates,ycoordinates):
     for i in range(xcoordinates.size):
-        board[xcoordinates[i],ycoordinates[i]]=1
+        board[xcoordinates[i],ycoordinates[i]]=8
         
 def guess(board,guess):
     if board[guess[0],guess[1]]!=0:
-        board[guess[0],guess[1]]=1
+        board[guess[0],guess[1]]=2
         return True
     else:
+        board[guess[0],guess[1]]=1
         return False
         
 #%%
 
+def random_guess():
+    x=random.randint(0,9)
+    y=random.randint(0,9)
+    return x,y
+
+#%%
 ship=Ship()
 
 xcoord,ycoord=coordinates(ship)
         
-add_ships(Board_player,xcoord,ycoord)
+add_ships(ship_board,xcoord,ycoord)
 
 ship.add(3,np.array([2,1]),"Vertical")
 
 xcoord,ycoord=coordinates(ship)
         
-add_ships(Board_player,xcoord,ycoord)
-print(Board_player)
-        
+add_ships(ship_board,xcoord,ycoord)
+print(ship_board)
+
         
         
         
