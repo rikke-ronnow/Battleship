@@ -11,16 +11,17 @@ Created on Mon Feb  7 19:00:22 2022
 
 import numpy as np
 import random
+import os
 
 ship_board=np.zeros((10,10))
 guess_board=np.zeros((10,10))
 
 class Ship:
     def __init__(self, size=2, position=np.array([0.0,0.0]),orientation="Horizontal",hits=0):
-        self.__size=[size]
-        self.__pos=[position]
-        self.__orient=[orientation]
-        self.__hits=[hits]
+        self.__size=size
+        self.__pos=position
+        self.__orient=orientation
+        self.__hits=hits
     
     def __repr__(self):
         return "size(s)=%s position(s)=%s, orientation(s)=%s, hits=%s" % ( self.__size, self.__pos, self.__orient, self.__hits)
@@ -29,18 +30,19 @@ class Ship:
         return "(%s, %s, %s, %s)" % (self.__size, self.__pos, self.__orient, self.__hits)
     
     def pos(self):
-        return self.__pos[-1]
+        return self.__pos
     
     def orient(self):
-        return self.__orient[-1]
+        return self.__orient
     
     def size(self):
-        return self.__size[-1]
+        return self.__size
     
     def hits(self):
-        return self.__hits[-1]
+        return self.__hits
     
     def updatehits(self):
+        print('You hit a ship!')
         self.__hits=self.__hits+1
     
     def add(self,s,p,o):
@@ -52,9 +54,14 @@ class Ship:
     
     def sunk(self):
         if self.__size==self.__hits:
+            print('You sunk a ship!')
             return True
         else:
             return False
+    
+    def contains(self):
+        return
+    
     
 def coordinates(ship):
         
@@ -96,28 +103,81 @@ def guess(board,guess):
     else:
         board[guess[0],guess[1]]=1
         return False
+    
+def guess_ship(guess):
+    for ship in ship_array:
+        if guess[0] in coordinates(ship)[0] and guess[0] in coordinates(ship)[0]:
+           ship.updatehits()
+           guess_board[guess[0],guess[1]]=2
+           ship_board[guess[0],guess[1]]=0
+           if ship.sunk():
+               guess_board[guess[0],guess[1]]=3
+           return True
+        else:
+            guess_board[guess[0],guess[1]]=1
+            print("You missed")
+            return False
         
 #%%
 
 def random_guess():
     x=random.randint(0,9)
     y=random.randint(0,9)
-    return x,y
+    return np.array([x,y])
 
 #%%
-ship=Ship()
 
-xcoord,ycoord=coordinates(ship)
-        
-add_ships(ship_board,xcoord,ycoord)
+ship_array=np.array([])
 
-ship.add(3,np.array([2,1]),"Vertical")
+ship1=Ship()
 
-xcoord,ycoord=coordinates(ship)
-        
-add_ships(ship_board,xcoord,ycoord)
-print(ship_board)
+ship_array=np.append(ship_array,ship1)
 
+
+ship2=Ship(3,np.array([2,1]),"Vertical")
+
+ship_array=np.append(ship_array,ship2)
+
+for ship in ship_array:
+    xcoord,ycoord=coordinates(ship)
+    add_ships(ship_board,xcoord,ycoord)
+    
+guess_ship(np.array([0,0]))
+
+guess_ship(np.array([4,4]))
+
+guess_ship(random_guess())
+
+for ship in ship_array:
+    print('hits',ship.hits())
+
+print(guess_board)
+print(ship1.pos()[0])
         
-        
-        
+#%%
+
+os.system('clear')
+
+turns=40
+
+for turn in range(turns):
+  print("Turn:", turn + 1, "of", turns)
+  print("Ships left:", len(ship_array))
+  print()
+  
+  x = int(input("Guess an x coordinate: "))
+  y = int(input("Guess a y coordinate: "))
+  guess_coord=np.array([x,y])
+
+  guess_ship(guess_coord)
+
+  print(guess_board)
+  
+  if np.sum(ship_board)==0:
+    break
+
+# End Game
+if np.sum(ship_board)!=0:
+  print("You lose!")
+else:
+  print("All the ships are sunk. You win!")   
