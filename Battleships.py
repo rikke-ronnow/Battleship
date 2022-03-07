@@ -109,15 +109,17 @@ def guess_ship(guess):
         xcoords=coordinates(ship)[0]
         ycoords=coordinates(ship)[1]
         if guess[0] in xcoords and guess[1] in ycoords:
-           ship.updatehits()
-           guess_board[guess[0],guess[1]]=2
-           ship_board[guess[0],guess[1]]=0
-           if ship.sunk():
-               for i in range(len(xcoords)):
-                   guess_board[xcoords[i],ycoords[i]]=3
-           break
+            if ship_board[guess[0],guess[1]]!=0:
+                ship.updatehits()
+            guess_board[guess[0],guess[1]]=2
+            ship_board[guess[0],guess[1]]=0
+            if ship.sunk():
+                for i in range(len(xcoords)):
+                    guess_board[xcoords[i],ycoords[i]]=3
+            break
         else:
             guess_board[guess[0],guess[1]]=1
+
         
 #%%
 
@@ -127,6 +129,9 @@ def random_guess():
     return np.array([x,y])
 
 #%%
+
+ship_board=np.zeros((10,10))
+guess_board=np.zeros((10,10))
 
 ship_array=np.array([])
 
@@ -151,7 +156,7 @@ ship_array=np.append(ship_array,ship4)
 for ship in ship_array:
     xcoord,ycoord=coordinates(ship)
     add_ships(ship_board,xcoord,ycoord)
-   
+'''   
 guess1=np.array([0,0])    
    
 guess_ship(guess1)    
@@ -162,7 +167,7 @@ guess_ship(guess2)
     
 print(ship_board)  
 print(guess_board)  
-
+'''
 
 '''    
 guess_ship(np.array([0,0]))
