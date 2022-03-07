@@ -8,13 +8,11 @@ from Battleships.py import *
 import numpy as np
 import random as random
 
-ship1 = Ship()
-#adding a second position 
-ship1.add()
+ship1 = Battleships.Ship()
 
 class Field:
     def __init__(ship):
-        self.position = np.zeros(shape=(10,10))
+        self.board = np.zeros(shape=(10,10))
         #thinking how to get the 2x1 ship
         self.ship_position = ship.pos()
         self.ship_position2 = 
@@ -26,35 +24,26 @@ class Field:
         #3 different possibile status at each location
         #possible location of the 2x1 ship
         #status of different parts of the ship
-        return (2701*100*2)
+        return 0
     
     def get_state(self):
         state = 0
-        #so 0-1800 can uniquely represent the status of each location
-        for index, x in np.ndenumerate(self.position):
-            state += index[0]*x + index[1]*x
-        
-        #accounting for the different possible ship status 
-        state = state*2 
-        
-        #encoding the location of the ship into the state
-        state = state*100 + self.ship_position[0]*2
-        state = state*10 + self.ship_position[1]*2
-        if self.shipstatus1:
-            state = state + 1
+        for i,x in enumerate((self.board.reshape(-1))):
+            state += int(x*2**(2*i))
+
 
         return state
     
     #unfinished
-    def make_action(ship, guess_input):
+    def make_action(ship, guess):
         
-        if guess(guess_input) == sth:  # missed
+        if guess_ship(guess_input) == sth:  # missed
                 return -10, False
-        elif action == sth:  # hit
+        elif guess_ship(guess_input) == sth:  # hit
                 return +10, False
-        elif action == sth:  # sunk
+        elif guess_ship(guess_input) == sth:  # sunk
                 return +20, True
-        elif action == sth:  # repeated
+        elif guess_ship(guess_input) == sth:  # repeated
                 return -20, False
             
 #%%
