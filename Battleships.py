@@ -59,9 +59,6 @@ class Ship:
         else:
             return False
     
-    def contains(self):
-        return
-    
     
 def coordinates(ship):
         
@@ -164,8 +161,9 @@ ship_array=np.append(ship_array,ship4)
 for ship in ship_array:
     xcoord,ycoord=coordinates(ship)
     add_ships(ship_board,xcoord,ycoord)
-'''   
-guess1=np.array([0,0])    
+
+
+'''guess1=np.array([0,0])    
    
 guess_ship(guess1)    
 
@@ -175,9 +173,7 @@ guess_ship(guess2)
     
 print(ship_board)  
 print(guess_board)  
-'''
 
-'''    
 guess_ship(np.array([0,0]))
 
 guess_ship(np.array([4,4]))
@@ -189,23 +185,22 @@ for ship in ship_array:
 
 print(guess_board)
 print(ship1.pos()[0])'''
-
-
+#%%%
 os.system('clear')
 
-turns=2000
+turns=10
 
 for turn in range(turns):
   print("Turn:", turn + 1, "of", turns)
   print("Ships left:", len(ship_array))
   print()
   
-  #x = int(input("Guess an x coordinate: "))
-  #y = int(input("Guess a y coordinate: "))
+  x = int(input("Guess an x coordinate: "))
+  y = int(input("Guess a y coordinate: "))
   
 
-  #guess_coord=np.array([x,y])
-  guess_coord=less_random_guess()
+  guess_coord=np.array([x,y])
+  #guess_coord=less_random_guess()
   
   guess_ship(guess_coord)
 
@@ -219,4 +214,4 @@ for turn in range(turns):
 if np.sum(ship_board)!=0:
   print("You lose!")
 else:
-  print("All the ships have been sunk. You win!")   
+  print("All the ships have been sunk. You win!")
