@@ -59,9 +59,6 @@ class Ship:
         else:
             return False
     
-    def contains(self):
-        return
-    
     
 def coordinates(ship):
         
@@ -106,17 +103,20 @@ def guess(board,guess):
     
 def guess_ship(guess):
     for ship in ship_array:
-        if guess[0] in coordinates(ship)[0] and guess[1] in coordinates(ship)[1]:
-           ship.updatehits()
-           guess_board[guess[0],guess[1]]=2
-           ship_board[guess[0],guess[1]]=0
-           if ship.sunk():
-               guess_board[guess[0],guess[1]]=3
-           return True
+        xcoords=coordinates(ship)[0]
+        ycoords=coordinates(ship)[1]
+        if guess[0] in xcoords and guess[1] in ycoords:
+            if ship_board[guess[0],guess[1]]!=0:
+                ship.updatehits()
+            guess_board[guess[0],guess[1]]=2
+            ship_board[guess[0],guess[1]]=0
+            if ship.sunk():
+                for i in range(len(xcoords)):
+                    guess_board[xcoords[i],ycoords[i]]=3
+            break
         else:
             guess_board[guess[0],guess[1]]=1
-            print("You missed")
-            return False
+
         
 #%%
 
@@ -125,7 +125,18 @@ def random_guess():
     y=random.randint(0,9)
     return np.array([x,y])
 
+def less_random_guess():
+    x=random.randint(0,9)
+    y=random.randint(0,9)
+    while guess_board[x,y]!=0:
+        x=random.randint(0,9)
+        y=random.randint(0,9)
+    return np.array([x,y])
+
 #%%
+
+ship_board=np.zeros((10,10))
+guess_board=np.zeros((10,10))
 
 ship_array=np.array([])
 
@@ -133,15 +144,36 @@ ship1=Ship()
 
 ship_array=np.append(ship_array,ship1)
 
-'''
+
 ship2=Ship(3,np.array([2,1]),"Vertical")
 
-ship_array=np.append(ship_array,ship2)'''
+ship_array=np.append(ship_array,ship2)
+
+ship3=Ship(4, np.array([6,6]),"Horizontal")
+
+ship_array=np.append(ship_array,ship3)
+
+ship4=Ship(4, np.array([0,9]),"Horizontal")
+
+ship_array=np.append(ship_array,ship4)
+
 
 for ship in ship_array:
     xcoord,ycoord=coordinates(ship)
     add_ships(ship_board,xcoord,ycoord)
-'''    
+
+
+'''guess1=np.array([0,0])    
+   
+guess_ship(guess1)    
+
+guess2=np.array([0,9])    
+   
+guess_ship(guess2)  
+    
+print(ship_board)  
+print(guess_board)  
+
 guess_ship(np.array([0,0]))
 
 guess_ship(np.array([4,4]))
@@ -153,12 +185,10 @@ for ship in ship_array:
 
 print(guess_board)
 print(ship1.pos()[0])'''
-        
-#%%
-
+#%%%
 os.system('clear')
 
-turns=40
+turns=10
 
 for turn in range(turns):
   print("Turn:", turn + 1, "of", turns)
@@ -170,17 +200,18 @@ for turn in range(turns):
   
 
   guess_coord=np.array([x,y])
-
+  #guess_coord=less_random_guess()
+  
   guess_ship(guess_coord)
 
   print(guess_board)
-  print(ship_board)
+  #print(ship_board)
   
   if np.sum(ship_board)==0:
-    break
+      break
 
 # End Game
 if np.sum(ship_board)!=0:
   print("You lose!")
 else:
-  print("All the ships have been sunk. You win!")   
+  print("All the ships have been sunk. You win!")
