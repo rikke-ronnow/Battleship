@@ -30,8 +30,6 @@ class Field:
         state = 0
         for i,x in enumerate((self.board.reshape(-1))):
             state += int(x*2**(2*i))
-
-
         return state
     
     #unfinished
