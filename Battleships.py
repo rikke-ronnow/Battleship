@@ -59,12 +59,6 @@ class Ship:
         else:
             return False
     
-<<<<<<< HEAD
-    def contains(self):
-        return
-    
-=======
->>>>>>> a3cabb47fed3658891c6fa9a172eac6dd0cfe208
     
 def coordinates(ship):
         
@@ -109,19 +103,6 @@ def guess(board,guess):
     
 def guess_ship(guess):
     for ship in ship_array:
-<<<<<<< HEAD
-        if guess[0] in coordinates(ship)[0] and guess[1] in coordinates(ship)[1]:
-           ship.updatehits()
-           guess_board[guess[0],guess[1]]=2
-           ship_board[guess[0],guess[1]]=0
-           if ship.sunk():
-               guess_board[guess[0],guess[1]]=3
-           return True
-        else:
-            guess_board[guess[0],guess[1]]=1
-            print("You missed")
-            return False
-=======
         xcoords=coordinates(ship)[0]
         ycoords=coordinates(ship)[1]
         if guess[0] in xcoords and guess[1] in ycoords:
@@ -136,7 +117,6 @@ def guess_ship(guess):
         else:
             guess_board[guess[0],guess[1]]=1
 
->>>>>>> a3cabb47fed3658891c6fa9a172eac6dd0cfe208
         
 #%%
 
@@ -145,10 +125,6 @@ def random_guess():
     y=random.randint(0,9)
     return np.array([x,y])
 
-<<<<<<< HEAD
-#%%
-
-=======
 def less_random_guess():
     x=random.randint(0,9)
     y=random.randint(0,9)
@@ -162,19 +138,12 @@ def less_random_guess():
 ship_board=np.zeros((10,10))
 guess_board=np.zeros((10,10))
 
->>>>>>> a3cabb47fed3658891c6fa9a172eac6dd0cfe208
 ship_array=np.array([])
 
 ship1=Ship()
 
 ship_array=np.append(ship_array,ship1)
 
-<<<<<<< HEAD
-'''
-ship2=Ship(3,np.array([2,1]),"Vertical")
-
-ship_array=np.append(ship_array,ship2)'''
-=======
 
 ship2=Ship(3,np.array([2,1]),"Vertical")
 
@@ -188,14 +157,10 @@ ship4=Ship(4, np.array([0,9]),"Horizontal")
 
 ship_array=np.append(ship_array,ship4)
 
->>>>>>> a3cabb47fed3658891c6fa9a172eac6dd0cfe208
 
 for ship in ship_array:
     xcoord,ycoord=coordinates(ship)
     add_ships(ship_board,xcoord,ycoord)
-<<<<<<< HEAD
-'''    
-=======
 
 
 '''guess1=np.array([0,0])    
@@ -209,7 +174,6 @@ guess_ship(guess2)
 print(ship_board)  
 print(guess_board)  
 
->>>>>>> a3cabb47fed3658891c6fa9a172eac6dd0cfe208
 guess_ship(np.array([0,0]))
 
 guess_ship(np.array([4,4]))
@@ -221,19 +185,10 @@ for ship in ship_array:
 
 print(guess_board)
 print(ship1.pos()[0])'''
-<<<<<<< HEAD
-        
-#%%
-
-os.system('clear')
-
-turns=40
-=======
 #%%%
 os.system('clear')
 
 turns=10
->>>>>>> a3cabb47fed3658891c6fa9a172eac6dd0cfe208
 
 for turn in range(turns):
   print("Turn:", turn + 1, "of", turns)
@@ -245,16 +200,6 @@ for turn in range(turns):
   
 
   guess_coord=np.array([x,y])
-<<<<<<< HEAD
-
-  guess_ship(guess_coord)
-
-  print(guess_board)
-  print(ship_board)
-  
-  if np.sum(ship_board)==0:
-    break
-=======
   #guess_coord=less_random_guess()
   
   guess_ship(guess_coord)
@@ -264,14 +209,9 @@ for turn in range(turns):
   
   if np.sum(ship_board)==0:
       break
->>>>>>> a3cabb47fed3658891c6fa9a172eac6dd0cfe208
 
 # End Game
 if np.sum(ship_board)!=0:
   print("You lose!")
 else:
-<<<<<<< HEAD
-  print("All the ships have been sunk. You win!")   
-=======
   print("All the ships have been sunk. You win!")
->>>>>>> a3cabb47fed3658891c6fa9a172eac6dd0cfe208
