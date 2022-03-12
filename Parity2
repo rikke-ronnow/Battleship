@@ -199,23 +199,23 @@ os.system('clear')
 def parity(board):
    for rowindex, row in enumerate(board):
        if 2 in row:
-           i = np.where(row == 2)
-           for colindex in i:
+           i = list(np.where(row == 2))
+           for colindex in i[0]: 
                if board[rowindex][np.max([0,colindex-1])] == 0:
-                   return rowindex, colindex
+                   return rowindex, np.max([0,colindex-1])
                elif board[rowindex][np.min([9,colindex+1])] == 0:
-                   return rowindex, colindex
+                   return rowindex, np.min([9,colindex+1])
                elif board[np.max([0,rowindex-1])][colindex] == 0:
-                   return rowindex, colindex
-               elif board[np.min([0,rowindex+1])][colindex] == 0:
-                   return rowindex, colindex
+                   return np.max([0,rowindex-1]), colindex
+               elif board[np.min([9,rowindex+1])][colindex] == 0:
+                   return np.min([9,rowindex+1]), colindex
                
    while True:
-       x=random.randint(0,9)
-       y=random.randint(0,9)
-       if board[x][y] == 0:
-           if x + y % 2 ==0:
-               return x,y
+       rowindex=random.randint(0,9)
+       colindex=random.randint(0,9)
+       if board[rowindex][colindex] == 0:
+           if ((rowindex + colindex) % 2 )==0:
+               return rowindex, colindex
     
 
 
