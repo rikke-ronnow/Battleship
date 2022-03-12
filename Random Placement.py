@@ -15,7 +15,7 @@ def ship_validation(board, ship):
         if c < 0 or c > 9:
             return False
     
-    if ship.size() < 0:
+    if ship.size() < 1:
         return False
     
     if ship.orient() == "Horizontal":
@@ -39,13 +39,16 @@ def ship_placement_random(l:list=[2,3,4,4]):
     board_temp = np.zeros((10,10))
     ship_arr = np.array([])
     for length in l:
-        ship_temp = Ship(length, 
-                         np.array([random.randint(0,9),random.randint(0,9)]), 
-                         random.choice(["Horizontal", "Vertical"]))
-        while not ship_validation(board_temp, ship_temp):
+        while True:
             ship_temp = Ship(length, 
                              np.array([random.randint(0,9),random.randint(0,9)]), 
                              random.choice(["Horizontal", "Vertical"]))
+            if ship_validation(board_temp, ship_temp):
+                break
+        #while not ship_validation(board_temp, ship_temp):
+        #    ship_temp = Ship(length, 
+        #                     np.array([random.randint(0,9),random.randint(0,9)]), 
+        #                     random.choice(["Horizontal", "Vertical"]))
         x_temp, y_temp = ship_temp.pos()
         if ship_temp.orient() == "Horizontal":
             for i in range(length):
@@ -54,6 +57,7 @@ def ship_placement_random(l:list=[2,3,4,4]):
             for i in range(length):
                 board_temp[x_temp][y_temp+i] = 1
         ship_arr=np.append(ship_arr,ship_temp)
+    print(board_temp)
     return ship_arr
 
 

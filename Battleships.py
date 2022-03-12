@@ -6,8 +6,6 @@ Created on Mon Feb  7 19:00:22 2022
 @author: rikke.ronnow
 """
 
-<<<<<<< Updated upstream
-=======
 #assign different values to each location depending on whether it has been hit
 #sunk, missed, or never been shot
 
@@ -219,4 +217,4 @@ if __name__ == "__main__":
       print("You lose!")
     else:
       print("All the ships have been sunk. You win!")
->>>>>>> Stashed changes
+
