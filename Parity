@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+Created on Sat Mar 12 17:00:58 2022
+
+@author: shimin
+"""
+
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
 Created on Mon Feb  7 19:00:22 2022
 
 @author: rikke.ronnow
 """
 
-<<<<<<< Updated upstream
-=======
 #assign different values to each location depending on whether it has been hit
 #sunk, missed, or never been shot
 
@@ -137,8 +143,105 @@ def less_random_guess():
 
 #%%
 
+ship_board=np.zeros((10,10))
+guess_board=np.zeros((10,10))
 
-if __name__ == "__main__":
+ship_array=np.array([])
+
+ship1=Ship()
+
+ship_array=np.append(ship_array,ship1)
+
+
+ship2=Ship(3,np.array([2,1]),"Vertical")
+
+ship_array=np.append(ship_array,ship2)
+
+ship3=Ship(4, np.array([6,6]),"Horizontal")
+
+ship_array=np.append(ship_array,ship3)
+
+ship4=Ship(4, np.array([0,9]),"Horizontal")
+
+ship_array=np.append(ship_array,ship4)
+
+
+for ship in ship_array:
+    xcoord,ycoord=coordinates(ship)
+    add_ships(ship_board,xcoord,ycoord)
+
+
+'''guess1=np.array([0,0])    
+   
+guess_ship(guess1)    
+
+guess2=np.array([0,9])    
+   
+guess_ship(guess2)  
+    
+print(ship_board)  
+print(guess_board)  
+
+guess_ship(np.array([0,0]))
+
+guess_ship(np.array([4,4]))
+
+guess_ship(random_guess())
+
+for ship in ship_array:
+    print('hits',ship.hits())
+
+print(guess_board)
+print(ship1.pos()[0])'''
+#%%%
+os.system('clear')
+
+def parity(board):
+   for rowindex, row in enumerate(board):
+       if 2 in row:
+           i = list(np.where(row == 2))
+           for colindex in i[0]: 
+               if board[rowindex][np.max([0,colindex-1])] == 0:
+                   return rowindex, np.max([0,colindex-1])
+               elif board[rowindex][np.min([9,colindex+1])] == 0:
+                   return rowindex, np.min([9,colindex+1])
+               elif board[np.max([0,rowindex-1])][colindex] == 0:
+                   return np.max([0,rowindex-1]), colindex
+               elif board[np.min([9,rowindex+1])][colindex] == 0:
+                   return np.min([9,rowindex+1]), colindex
+               
+   while True:
+       rowindex=random.randint(0,9)
+       colindex=random.randint(0,9)
+       if board[rowindex][colindex] == 0:
+           if ((rowindex + colindex) % 2 )==0:
+               return rowindex, colindex
+    
+def non_parity(board):
+   for rowindex, row in enumerate(board):
+       if 2 in row:
+           i = list(np.where(row == 2))
+           for colindex in i[0]: 
+               if board[rowindex][np.max([0,colindex-1])] == 0:
+                   return rowindex, np.max([0,colindex-1])
+               elif board[rowindex][np.min([9,colindex+1])] == 0:
+                   return rowindex, np.min([9,colindex+1])
+               elif board[np.max([0,rowindex-1])][colindex] == 0:
+                   return np.max([0,rowindex-1]), colindex
+               elif board[np.min([9,rowindex+1])][colindex] == 0:
+                   return np.min([9,rowindex+1]), colindex
+               
+   while True:
+       rowindex=random.randint(0,9)
+       colindex=random.randint(0,9)
+       if board[rowindex][colindex] == 0:
+           return rowindex, colindex
+    
+
+turns=100
+l = []
+n_sim = 100
+for _ in range(n_sim):
     ship_board=np.zeros((10,10))
     guess_board=np.zeros((10,10))
     
@@ -160,47 +263,22 @@ if __name__ == "__main__":
     ship4=Ship(4, np.array([0,9]),"Horizontal")
     
     ship_array=np.append(ship_array,ship4)
-    
-    
+
+
     for ship in ship_array:
         xcoord,ycoord=coordinates(ship)
         add_ships(ship_board,xcoord,ycoord)
-    
-    
-    '''guess1=np.array([0,0])    
-       
-    guess_ship(guess1)    
-    
-    guess2=np.array([0,9])    
-       
-    guess_ship(guess2)  
         
-    print(ship_board)  
-    print(guess_board)  
-    
-    guess_ship(np.array([0,0]))
-    
-    guess_ship(np.array([4,4]))
-    
-    guess_ship(random_guess())
-    
-    for ship in ship_array:
-        print('hits',ship.hits())
-    
-    print(guess_board)
-    print(ship1.pos()[0])'''
-    #%%%
-    os.system('clear')
-    
-    turns=20
-    
     for turn in range(turns):
       print("Turn:", turn + 1, "of", turns)
       print("Ships left:", len(ship_array))
       print()
       
-      x = int(input("Guess an x coordinate: "))
-      y = int(input("Guess a y coordinate: "))
+      
+      x, y = non_parity(guess_board)
+      
+      #x = int(input("Guess an x coordinate: "))
+      #y = int(input("Guess a y coordinate: "))
       
     
       guess_coord=np.array([x,y])
@@ -212,6 +290,7 @@ if __name__ == "__main__":
       #print(ship_board)
       
       if np.sum(ship_board)==0:
+          l += [turn]
           break
     
     # End Game
@@ -219,4 +298,14 @@ if __name__ == "__main__":
       print("You lose!")
     else:
       print("All the ships have been sunk. You win!")
->>>>>>> Stashed changes
+      
+
+  
+import matplotlib.pyplot as plt
+plt.hist(l)
+  
+
+  
+  
+  
+  
