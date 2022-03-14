@@ -11,7 +11,7 @@ Created on Mon Feb  7 19:00:22 2022
 
 import numpy as np
 import random
-import os
+#import os
 
 ship_board=np.zeros((10,10))
 guess_board=np.zeros((10,10))
@@ -42,7 +42,7 @@ class Ship:
         return self.__hits
     
     def updatehits(self):
-        print('You hit a ship!')
+        #print('You hit a ship!')
         self.__hits=self.__hits+1
     
     def add(self,s,p,o):
@@ -54,7 +54,7 @@ class Ship:
     
     def sunk(self):
         if self.__size==self.__hits:
-            print('You sunk a ship!')
+            #print('You sunk a ship!')
             return True
         else:
             return False
@@ -162,6 +162,7 @@ for ship in ship_array:
     xcoord,ycoord=coordinates(ship)
     add_ships(ship_board,xcoord,ycoord)
 
+print(ship_board)
 
 '''guess1=np.array([0,0])    
    
@@ -186,21 +187,23 @@ for ship in ship_array:
 print(guess_board)
 print(ship1.pos()[0])'''
 #%%%
-os.system('clear')
+'''os.system('clear')
 
 turns=10
+
+
 
 for turn in range(turns):
   print("Turn:", turn + 1, "of", turns)
   print("Ships left:", len(ship_array))
   print()
   
-  x = int(input("Guess an x coordinate: "))
-  y = int(input("Guess a y coordinate: "))
+  #x = int(input("Guess an x coordinate: "))
+  #y = int(input("Guess a y coordinate: "))
   
 
-  guess_coord=np.array([x,y])
-  #guess_coord=less_random_guess()
+  #guess_coord=np.array([x,y])
+  guess_coord=less_random_guess()
   
   guess_ship(guess_coord)
 
@@ -215,3 +218,107 @@ if np.sum(ship_board)!=0:
   print("You lose!")
 else:
   print("All the ships have been sunk. You win!")
+  '''
+
+#%%
+'''
+turns=100
+
+def play_game(times,guess_strategy):
+    a=[]
+    for time in range(times):
+        for turn in range(turns):
+          print("Turn:", turn + 1, "of", turns)
+          print("Ships left:", len(ship_array))
+          print()
+          
+          #x = int(input("Guess an x coordinate: "))
+          #y = int(input("Guess a y coordinate: "))
+          
+        
+          guess_coord=guess_strategy
+          #guess_coord=less_random_guess()
+          
+          guess_ship(guess_coord)
+        
+          print(guess_board)
+          #print(ship_board)
+          
+          if np.sum(ship_board)==0:
+              break
+        
+        # End Game
+        if np.sum(ship_board)!=0:
+          print("You lose!")
+          a.append(turns)
+        else:
+          print("All the ships have been sunk. You win!")
+          a.append(turns)
+      
+    return np.array(a)  
+ ''' 
+#%%
+
+#b=play_game(3,less_random_guess())  
+turns=100  
+a=[]
+for time in range(1000):
+    ship_board=np.zeros((10,10))
+    guess_board=np.zeros((10,10))
+
+    ship_array=np.array([])
+    
+    ship1=Ship()
+    
+    ship_array=np.append(ship_array,ship1)
+    
+    
+    ship2=Ship(3,np.array([2,1]),"Vertical")
+    
+    ship_array=np.append(ship_array,ship2)
+    
+    ship3=Ship(4, np.array([6,6]),"Horizontal")
+    
+    ship_array=np.append(ship_array,ship3)
+    
+    ship4=Ship(4, np.array([0,9]),"Horizontal")
+    
+    ship_array=np.append(ship_array,ship4)
+    
+    
+    for ship in ship_array:
+        xcoord,ycoord=coordinates(ship)
+        add_ships(ship_board,xcoord,ycoord)
+    for turn in range(turns):
+         #print("Turn:", turn + 1, "of", turns)
+         #print("Ships left:", len(ship_array))
+         #print()
+          
+          #x = int(input("Guess an x coordinate: "))
+          #y = int(input("Guess a y coordinate: "))
+          
+        
+         guess_coord=less_random_guess()
+          #guess_coord=less_random_guess()
+          
+         guess_ship(guess_coord)
+        
+         #print(guess_board)
+          #print(ship_board)
+          
+         if np.sum(ship_board)==0:
+             break
+        
+        # End Game
+    if np.sum(ship_board)!=0:
+         #print("You lose!")
+         a.append(turn)
+    else:
+         #print("All the ships have been sunk. You win!")
+         a.append(turn)  
+
+#%%
+
+turns=np.array(a)
+
+np.savetxt('turns.txt',turns)    
