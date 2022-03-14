@@ -133,7 +133,7 @@ class Field:
         #useless for now, using guess_board and ship_board instead
         self.board = guess_board
         self.ship_position = coordinates(ship)[0]
-        self.ship_position2 = coordinates(ship)[0]
+        self.ship_position2 = coordinates(ship)[1]
         self.ship_status1 = ship.hits()
         
     
@@ -191,6 +191,7 @@ for _ in range(10000):
     
     ship_array=np.array([])
     
+    #making random initial position
     p1 = random.randint(0,1)
     p2 = random.randint(0,1)
     ship1=Ship(position=np.array([p1,p2]))
@@ -229,6 +230,8 @@ def reinforcement_learning():
     alpha = 0.1
     gamma = 0.6
     
+    
+    #just a copy of above training
     done = False
     int_list = [0,1,2,3,4,5,6,7,8]
     
