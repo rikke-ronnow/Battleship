@@ -17,6 +17,7 @@ cmap = ListedColormap(['w', 'k', 'r','g'])
 nrows, ncols = 10,10
 board = np.zeros(nrows*ncols)
 
+board[5]=0
 
 board = board.reshape((nrows, ncols))
 
@@ -133,12 +134,12 @@ def guess_ship(guess):
             if ship.sunk():
                 for i in range(len(xcoords)):
                     guess_board[xcoords[i],ycoords[i]]=3
-                    board[xcoords[i],ycoords[i]]=3
+                    board[xcoords[i],ycoords[i]]=1
 
             break
         else:
             guess_board[guess[0],guess[1]]=1
-            board[guess[0],guess[1]]=1
+            board[guess[0],guess[1]]=3
 
             
 #%%
@@ -174,7 +175,7 @@ print(ship_board)
 
             
 
-cmap = ListedColormap(['w', 'k', 'r','g'])
+cmap = ListedColormap(['w','g', 'r','k'])
 
 # Make a 9x9 grid...
 nrows, ncols = 10,10
@@ -211,7 +212,9 @@ for turn in range(turns):
   col_labels = range(ncols)
   plt.matshow(board,cmap=cmap)
   plt.xticks(range(ncols), col_labels)
+
   plt.yticks(range(nrows), row_labels)
+
   plt.show()
 
   
