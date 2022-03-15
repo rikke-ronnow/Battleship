@@ -171,7 +171,7 @@ for ship in ship_array:
     xcoord,ycoord=coordinates(ship)
     add_ships(ship_board,xcoord,ycoord)
     
-print(ship_board)
+#print(ship_board)
 
             
 
