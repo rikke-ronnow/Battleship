@@ -42,7 +42,6 @@ class Ship:
         return self.__hits
     
     def updatehits(self):
-        #print('You hit a ship!')
         self.__hits=self.__hits+1
     
     def add(self,s,p,o):
@@ -54,7 +53,6 @@ class Ship:
     
     def sunk(self):
         if self.__size==self.__hits:
-            #print('You sunk a ship!')
             return True
         else:
             return False
@@ -162,33 +160,10 @@ for ship in ship_array:
     xcoord,ycoord=coordinates(ship)
     add_ships(ship_board,xcoord,ycoord)
 
-print(ship_board)
 
-'''guess1=np.array([0,0])    
-   
-guess_ship(guess1)    
-
-guess2=np.array([0,9])    
-   
-guess_ship(guess2)  
-    
-print(ship_board)  
-print(guess_board)  
-
-guess_ship(np.array([0,0]))
-
-guess_ship(np.array([4,4]))
-
-guess_ship(random_guess())
-
-for ship in ship_array:
-    print('hits',ship.hits())
-
-print(guess_board)
-print(ship1.pos()[0])'''
 #%%%
 
-turns=100  
+turns=100
 a=[]
 for time in range(10):
     ship_board=np.zeros((10,10))
