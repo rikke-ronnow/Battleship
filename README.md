@@ -1,4 +1,3 @@
 # Battleship
 
-Hello, how are you
-This is a repository.
+This is the repository for the hunt with and without parity, guessing strategy for Battleships. 
