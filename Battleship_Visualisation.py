@@ -8,28 +8,7 @@ Created on Mon Mar 14 18:54:05 2022
 
 import matplotlib.pyplot as plt
 import numpy as np
-
 from matplotlib.colors import ListedColormap
-
-cmap = ListedColormap(['w', 'k', 'r','g'])
-
-# Make a 9x9 grid...
-nrows, ncols = 10,10
-board = np.zeros(nrows*ncols)
-
-board[5]=0
-
-board = board.reshape((nrows, ncols))
-
-row_labels = range(nrows)
-col_labels = range(ncols)
-plt.matshow(board,cmap=cmap)
-plt.xticks(range(ncols), col_labels)
-plt.yticks(range(nrows), row_labels)
-plt.show()
-
-
-#%%
 
 
 
@@ -210,7 +189,7 @@ for turn in range(turns):
 
   row_labels = range(nrows)
   col_labels = range(ncols)
-  plt.matshow(board,cmap=cmap)
+  plt.matshow(board,cmap=cmap,vmin=0,vmax=3)
   plt.xticks(range(ncols), col_labels)
 
   plt.yticks(range(nrows), row_labels)

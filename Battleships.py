@@ -187,76 +187,68 @@ for ship in ship_array:
 print(guess_board)
 print(ship1.pos()[0])'''
 #%%%
-'''os.system('clear')
 
-turns=10
+turns=100  
+a=[]
+for time in range(10):
+    ship_board=np.zeros((10,10))
+    guess_board=np.zeros((10,10))
 
-
-
-for turn in range(turns):
-  print("Turn:", turn + 1, "of", turns)
-  print("Ships left:", len(ship_array))
-  print()
-  
-  #x = int(input("Guess an x coordinate: "))
-  #y = int(input("Guess a y coordinate: "))
-  
-
-  #guess_coord=np.array([x,y])
-  guess_coord=less_random_guess()
-  
-  guess_ship(guess_coord)
-
-  print(guess_board)
-  #print(ship_board)
-  
-  if np.sum(ship_board)==0:
-      break
-
-# End Game
-if np.sum(ship_board)!=0:
-  print("You lose!")
-else:
-  print("All the ships have been sunk. You win!")
-  '''
-
-#%%
-'''
-turns=100
-
-def play_game(times,guess_strategy):
-    a=[]
-    for time in range(times):
-        for turn in range(turns):
-          print("Turn:", turn + 1, "of", turns)
-          print("Ships left:", len(ship_array))
-          print()
+    ship_array=np.array([])
+    
+    ship1=Ship()
+    
+    ship_array=np.append(ship_array,ship1)
+    
+    
+    ship2=Ship(3,np.array([2,1]),"Vertical")
+    
+    ship_array=np.append(ship_array,ship2)
+    
+    ship3=Ship(4, np.array([6,6]),"Horizontal")
+    
+    ship_array=np.append(ship_array,ship3)
+    
+    ship4=Ship(4, np.array([0,9]),"Horizontal")
+    
+    ship_array=np.append(ship_array,ship4)
+    
+    
+    for ship in ship_array:
+        xcoord,ycoord=coordinates(ship)
+        add_ships(ship_board,xcoord,ycoord)
+    for turn in range(turns):
+         #print("Turn:", turn + 1, "of", turns)
+         #print("Ships left:", len(ship_array))
+         #print()
           
           #x = int(input("Guess an x coordinate: "))
           #y = int(input("Guess a y coordinate: "))
           
         
-          guess_coord=guess_strategy
+         guess_coord=less_random_guess()
           #guess_coord=less_random_guess()
           
-          guess_ship(guess_coord)
+         guess_ship(guess_coord)
         
-          print(guess_board)
+         #print(guess_board)
           #print(ship_board)
           
-          if np.sum(ship_board)==0:
-              break
+         if np.sum(ship_board)==0:
+             break
         
         # End Game
-        if np.sum(ship_board)!=0:
-          print("You lose!")
-          a.append(turns)
-        else:
-          print("All the ships have been sunk. You win!")
-          a.append(turns)
-      
-    return np.array(a)  
- ''' 
+    if np.sum(ship_board)!=0:
+         #print("You lose!")
+         a.append(turn)
+    else:
+         #print("All the ships have been sunk. You win!")
+         a.append(turn)  
+
 #%%
 
- 
+turns=np.array(a)
+
+np.savetxt('t.txt',turns)    
+
+
