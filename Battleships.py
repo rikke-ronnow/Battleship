@@ -193,31 +193,17 @@ for time in range(10):
         xcoord,ycoord=coordinates(ship)
         add_ships(ship_board,xcoord,ycoord)
     for turn in range(turns):
-         #print("Turn:", turn + 1, "of", turns)
-         #print("Ships left:", len(ship_array))
-         #print()
           
-          #x = int(input("Guess an x coordinate: "))
-          #y = int(input("Guess a y coordinate: "))
-          
-        
          guess_coord=less_random_guess()
-          #guess_coord=less_random_guess()
           
          guess_ship(guess_coord)
-        
-         #print(guess_board)
-          #print(ship_board)
-          
+
          if np.sum(ship_board)==0:
              break
-        
-        # End Game
+
     if np.sum(ship_board)!=0:
-         #print("You lose!")
          a.append(turn)
     else:
-         #print("All the ships have been sunk. You win!")
          a.append(turn)  
 
 #%%
