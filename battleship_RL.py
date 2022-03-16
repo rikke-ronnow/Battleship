@@ -11,12 +11,15 @@ Created on Wed Feb 23 00:02:42 2022
 import numpy as np
 import random
 import os
+import seaborn as sns
+import matplotlib.pylab as plt
 
 ship_board=np.zeros((3,3))
 guess_board=np.zeros((3,3))
 
+
 class Ship:
-    def __init__(self, size=2, position=np.array([1,1]),orientation="Horizontal",hits=0):
+    def __init__(self, size=2, position=np.array([1,1]),orientation="Vertical",hits=0):
         self.__size=size
         self.__pos=position
         self.__orient=orientation
@@ -66,14 +69,14 @@ def coordinates(ship):
     ycoordinates=np.array([])   
 
     
-    if orientation=="Horizontal":
+    if orientation=="Vertical":
         for i in range(size):
             xcoord=position[0]+i
             ycoord=position[1]
             xcoordinates=np.append(xcoordinates,xcoord)
             ycoordinates=np.append(ycoordinates,ycoord)
             
-    elif orientation=="Vertical":    
+    elif orientation=="Horizontal":    
         for i in range(size):
             xcoord=position[0]
             ycoord=position[1]+i
@@ -153,7 +156,7 @@ class Field:
     def make_action(self, action):
         
         #different action and their corresponding reward
-        location_list = [[1, 1], [0, 0], [0, 1], [0, 2], [2, 0], [2, 1], [2, 2], [1, 0], [1, 2]]
+        location_list = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]
         result = guess_ship(location_list[action])
         if result == 1:  # missed
             return -10, False
@@ -173,10 +176,10 @@ field = Field(ship1,guess_board)
 #set up q table
 number_of_states = field.get_number_of_states()
 number_of_actions = 9
-q_table = np.zeros((number_of_states, number_of_actions))
+q_table = np.zeros((number_of_states, number_of_actions), dtype=np.float16)
 
 #parameters
-epsilon = 0.9 #high cuz want mainly exploring for training
+epsilon = 0.1 #high cuz want mainly exploring for training
 alpha = 0.1
 gamma = 0.6
 
@@ -194,8 +197,14 @@ for _ in range(10000):
     #making random initial position
     p1 = random.randint(0,1)
     p2 = random.randint(0,1)
-    ship1=Ship(position=np.array([p1,p2]))
-    
+    if random.uniform(0,1) > 0.5:
+        ship1=Ship(position=np.array([p1,p2]),orientation="Horizontal")
+    else:
+        ship1=Ship(position=np.array([p1,p2]),orientation="Vertical")
+# =============================================================================
+#     ship1=Ship(position=np.array([p1,p2]),orientation="Vertical")   
+# =============================================================================
+ 
     ship_array=np.append(ship_array,ship1)
     
     for ship in ship_array:
@@ -243,8 +252,13 @@ def reinforcement_learning():
     
     p1 = random.randint(0,1)
     p2 = random.randint(0,1)
-    ship1=Ship(position=np.array([p1,p2]))
-    
+    if random.uniform(0,1) > 0.5:
+        ship1=Ship(position=np.array([p1,p2]),orientation="Horizontal")
+    else:
+        ship1=Ship(position=np.array([p1,p2]),orientation="Vertical")
+# =============================================================================
+#     ship1=Ship(position=np.array([p1,p2]),orientation="Vertical")
+# =============================================================================
     ship_array=np.append(ship_array,ship1)
     
     for ship in ship_array:
@@ -277,5 +291,19 @@ def reinforcement_learning():
 #%%
 
 #average step required to win the game
-runs_rl = [reinforcement_learning() for _ in range(1000)]
+runs_rl = [reinforcement_learning() for _ in range(10000)]
 print(sum(runs_rl)/len(runs_rl))
+
+#%%
+
+#plotting heatmap
+
+q_heatmap = [
+    [q_table[0,0],   q_table[0,1],	 q_table[0,2]],
+    [q_table[0,3],	q_table[0,4],	q_table[0,5]],
+    [q_table[0,6],	q_table[0,7],	q_table[0,8]]
+    ]
+
+ax = sns.heatmap( q_heatmap , linewidth = 0.5 , cmap = 'coolwarm' )
+plt.title( "2-D Heat Map" )
+plt.show()
