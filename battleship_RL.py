@@ -179,12 +179,12 @@ number_of_actions = 9
 q_table = np.zeros((number_of_states, number_of_actions), dtype=np.float16)
 
 #parameters
-epsilon = 0.1 #high cuz want mainly exploring for training
+epsilon = 0.8
 alpha = 0.1
 gamma = 0.6
 
 #training
-for _ in range(10000):
+for _ in range(1000):
     
     done = False
     int_list = [0,1,2,3,4,5,6,7,8]
@@ -196,14 +196,14 @@ for _ in range(10000):
     
     #making random initial position
     p1 = random.randint(0,1)
-    p2 = random.randint(0,1)
-    if random.uniform(0,1) > 0.5:
-        ship1=Ship(position=np.array([p1,p2]),orientation="Horizontal")
-    else:
-        ship1=Ship(position=np.array([p1,p2]),orientation="Vertical")
 # =============================================================================
-#     ship1=Ship(position=np.array([p1,p2]),orientation="Vertical")   
+#     p2 = random.randint(0,1)
+#     if random.uniform(0,1) > 0.5:
+#         ship1=Ship(position=np.array([p1,p2]),orientation="Horizontal")
+#     else:
+#         ship1=Ship(position=np.array([p1,p2]),orientation="Vertical")
 # =============================================================================
+    ship1=Ship(position=np.array([p1,1]),orientation="Horizontal")   
  
     ship_array=np.append(ship_array,ship1)
     
@@ -235,7 +235,7 @@ for _ in range(10000):
 
 #set up the model
 def reinforcement_learning():
-    epsilon = 0.1 #low cuz want to use trained q table
+    epsilon = 0.1
     alpha = 0.1
     gamma = 0.6
     
@@ -251,14 +251,14 @@ def reinforcement_learning():
     ship_array=np.array([])
     
     p1 = random.randint(0,1)
-    p2 = random.randint(0,1)
-    if random.uniform(0,1) > 0.5:
-        ship1=Ship(position=np.array([p1,p2]),orientation="Horizontal")
-    else:
-        ship1=Ship(position=np.array([p1,p2]),orientation="Vertical")
 # =============================================================================
-#     ship1=Ship(position=np.array([p1,p2]),orientation="Vertical")
+#     p2 = random.randint(0,1)
+#     if random.uniform(0,1) > 0.5:
+#         ship1=Ship(position=np.array([p1,p2]),orientation="Horizontal")
+#     else:
+#         ship1=Ship(position=np.array([p1,p2]),orientation="Vertical")
 # =============================================================================
+    ship1=Ship(position=np.array([p1,1]),orientation="Horizontal")
     ship_array=np.append(ship_array,ship1)
     
     for ship in ship_array:
@@ -304,6 +304,6 @@ q_heatmap = [
     [q_table[0,6],	q_table[0,7],	q_table[0,8]]
     ]
 
-ax = sns.heatmap( q_heatmap , linewidth = 0.5 , cmap = 'coolwarm' )
-plt.title( "2-D Heat Map" )
+ax = sns.heatmap( q_heatmap , linewidth = 0.5 , cmap = 'RdYlGn' )
+plt.title( "Placing rule: row 0/2; col fix 1&2" )
 plt.show()
