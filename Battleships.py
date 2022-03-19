@@ -24,7 +24,7 @@ class Ship:
         self.__hits=hits
     
     def __repr__(self):
-        return "size(s)=%s position(s)=%s, orientation(s)=%s, hits=%s" % ( self.__size, self.__pos, self.__orient, self.__hits)
+        return "size=%s position=%s, orientation=%s, hits=%s" % ( self.__size, self.__pos, self.__orient, self.__hits)
     
     def __str__(self):
         return "(%s, %s, %s, %s)" % (self.__size, self.__pos, self.__orient, self.__hits)
@@ -167,13 +167,69 @@ for ship in ship_array:
 print(ship_board)
 #%%%
 
+
+
+def ship_validation(board, ship):
+    x,y = ship.pos()
+    for c in ship.pos():
+        if c < 0 or c > 9:
+            return False
+    
+    if ship.size() < 1:
+        return False
+    
+    if ship.orient() == "Horizontal":
+        if x+ship.size()-1>9:
+            return False
+        for i in range(ship.size()):
+            if board[x+i][y] != 0:
+                return False
+    elif ship.orient() == "Vertical":
+        if y+ship.size()-1>9:
+            return False
+        for i in range(ship.size()):
+            if board[x][y+i] != 0:
+                return False
+    else:
+        return False
+    return True
+    
+
+def ship_placement_random(l:list=[2,3,4]):
+    board_temp = np.zeros((10,10))
+    ship_arr = np.array([])
+    for length in l:
+        while True:
+            ship_temp = Ship(length, 
+                             np.array([random.randint(0,9),random.randint(0,9)]), 
+                             random.choice(["Horizontal", "Vertical"]))
+            if ship_validation(board_temp, ship_temp):
+                break
+        #while not ship_validation(board_temp, ship_temp):
+        #    ship_temp = Ship(length, 
+        #                     np.array([random.randint(0,9),random.randint(0,9)]), 
+        #                     random.choice(["Horizontal", "Vertical"]))
+        x_temp, y_temp = ship_temp.pos()
+        if ship_temp.orient() == "Horizontal":
+            for i in range(length):
+                board_temp[x_temp+i][y_temp] = 1
+        elif ship_temp.orient() == "Vertical":
+            for i in range(length):
+                board_temp[x_temp][y_temp+i] = 1
+        ship_arr=np.append(ship_arr,ship_temp)
+    #print(board_temp)
+    return ship_arr
+
+
+#%%
+
 turns=100
 a=[]
-for time in range(1000):
+for time in range(10):
     ship_board=np.zeros((10,10))
     guess_board=np.zeros((10,10))
 
-    ship_array=np.array([])
+    '''ship_array=np.array([])
     
     ship1=Ship()
     
@@ -190,7 +246,8 @@ for time in range(1000):
     
     ship4=Ship(4, np.array([0,9]),"Horizontal")
     
-    ship_array=np.append(ship_array,ship4)
+    ship_array=np.append(ship_array,ship4)'''
+    ship_array=ship_placement_random()
     
     
     for ship in ship_array:
