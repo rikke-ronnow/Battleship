@@ -51,24 +51,21 @@ def play_game(times,guess_strategy):
 
 #%%
 
+#RdYlGn
+
 turns1=np.loadtxt('random_turns1.txt')
 
-plt.hist(turns1,bins=20)
 
 turns2=np.loadtxt('random_turns2.txt')
 
-plt.hist(turns2,bins=20)
 
 turns3=np.loadtxt('random_turns3.txt')
 
-plt.hist(turns3,bins=20)
-
-#%%
 
 turns=np.concatenate((turns1,turns2))
 turns=np.concatenate((turns,turns3))
 
-long_turns=np.loadtxt('turns.txt')
+long_turns=np.loadtxt('random_turns.txt')
 turns=np.concatenate((turns,long_turns))
 
 plt.hist(turns,bins=20)
@@ -78,3 +75,8 @@ plt.xlabel('Turns')
 
 plt.show()
 
+plt.hist(turns, bins = 50, histtype='step', cumulative=True, color='C2')
+plt.ylabel('Cumulative Frequency')
+plt.xlabel('Turns')
+
+plt.show()
