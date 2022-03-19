@@ -20,7 +20,9 @@ Created on Mon Feb  7 19:00:22 2022
 import numpy as np
 import random
 import os
-from RandomPlacement import ship_placement_random
+# =============================================================================
+# from RandomPlacement import ship_placement_random
+# =============================================================================
 
 ship_board=np.zeros((10,10))
 guess_board=np.zeros((10,10))
@@ -251,29 +253,33 @@ for n in range(n_sim):
     ship_board=np.zeros((10,10))
     guess_board=np.zeros((10,10))
     
-# =============================================================================
-#     ship_array=np.array([])
-#     
-#     ship1=Ship()
-#     
-#     ship_array=np.append(ship_array,ship1)
-#     
-#     
-#     ship2=Ship(3,np.array([2,1]),"Vertical")
-#     
-#     ship_array=np.append(ship_array,ship2)
-#     
-#     ship3=Ship(4, np.array([6,6]),"Horizontal")
-#     
-#     ship_array=np.append(ship_array,ship3)
-#     
-#     ship4=Ship(4, np.array([0,9]),"Horizontal")
-#     
-#     ship_array=np.append(ship_array,ship4)
-# =============================================================================
+    ship_array=np.array([])
+    
+    ship1=Ship()
+    
+    ship_array=np.append(ship_array,ship1)
+    
+    
+    ship2=Ship(3,np.array([2,1]),"Vertical")
+    
+    ship_array=np.append(ship_array,ship2)
+    
+    ship3=Ship(3, np.array([6,6]),"Horizontal")
+    
+    ship_array=np.append(ship_array,ship3)
+    
+    ship4=Ship(4, np.array([0,9]),"Horizontal")
+    
+    ship_array=np.append(ship_array,ship4)
+    
+    ship5=Ship(5, np.array([4,3]),"Vertical")
+    
+    ship_array=np.append(ship_array,ship5)
     
     # creating the ship array
-    ship_array = ship_placement_random()
+# =============================================================================
+#     ship_array = ship_placement_random()
+# =============================================================================
 
     # placing the ships on the board
     for ship in ship_array:
