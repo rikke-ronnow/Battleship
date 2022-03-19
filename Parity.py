@@ -293,7 +293,7 @@ for n in range(n_sim):
       # print()
       
       # using the parity strategy to determine where to hit
-      x, y = parity(guess_board)
+      x, y = non_parity(guess_board)
       
       #x = int(input("Guess an x coordinate: "))
       #y = int(input("Guess a y coordinate: "))
@@ -320,7 +320,7 @@ for n in range(n_sim):
       
 
 # recording the results in a text file
-with open('parity.txt', 'w') as f:
+with open('non_parity.txt', 'w') as f:
     f.writelines('\n'.join([str(i) for i in l]))
 
 # plotting a histogram
