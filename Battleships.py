@@ -147,17 +147,17 @@ ship2=Ship(3,np.array([2,1]),"Vertical")
 
 ship_array=np.append(ship_array,ship2)
 
-ship3=Ship(3, np.array([6,6]),"Horizontal")
+ship3=Ship(4, np.array([6,6]),"Horizontal")
 
 ship_array=np.append(ship_array,ship3)
-
+'''
 ship4=Ship(4, np.array([0,9]),"Horizontal")
 
 ship_array=np.append(ship_array,ship4)
 
 ship5=Ship(5, np.array([4,3]),"Vertical")
 
-ship_array=np.append(ship_array,ship5)
+ship_array=np.append(ship_array,ship5)'''
 
 
 for ship in ship_array:
@@ -169,7 +169,7 @@ print(ship_board)
 
 turns=100
 a=[]
-for time in range(10):
+for time in range(1000):
     ship_board=np.zeros((10,10))
     guess_board=np.zeros((10,10))
 
@@ -214,6 +214,6 @@ for time in range(10):
 
 turns=np.array(a)
 
-np.savetxt('t.txt',turns)    
+np.savetxt('random_turns_3.txt',turns)    
 
 

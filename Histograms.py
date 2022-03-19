@@ -98,16 +98,16 @@ plt.xlabel('Turns')
 
 plt.show()'''
 
-plt.hist(turns1, bins = 40, histtype='step', cumulative=True, color=colors[1],label='Random')
-plt.hist(parity, bins = 40, histtype='step', cumulative=True, color=colors[2],label='Parity')
-plt.hist(nonparity, bins = 40, histtype='step', cumulative=True, color=colors[3],label='Non parity')
+plt.hist(turns1, bins = 40, histtype='step', cumulative=True, color='g',label='Random')
+plt.hist(parity, bins = 40, histtype='step', cumulative=True, color='r',label='Parity')
+plt.hist(nonparity, bins = 40, histtype='step', cumulative=True, color='k',label='Non parity')
 #plt.hist(turns2, bins = 40, histtype='step', cumulative=True, color=colors[1])
 
 #plt.hist(turns2, bins = 50, histtype='step', cumulative=True, color=colors[4])
 
 plt.legend()
 plt.xlim(0,100)
-plt.ylabel('Cumulative Frequency')
+plt.ylabel('Number of games')
 plt.xlabel('Turns')
 
 plt.savefig('histogram',bbox_inches='tight',dpi=1000)
