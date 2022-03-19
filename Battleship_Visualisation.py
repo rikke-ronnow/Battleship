@@ -9,6 +9,7 @@ Created on Mon Mar 14 18:54:05 2022
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.colors import ListedColormap
+import random
 
 
 
@@ -120,6 +121,14 @@ def guess_ship(guess):
             guess_board[guess[0],guess[1]]=1
             board[guess[0],guess[1]]=3
 
+
+def less_random_guess():
+    x=random.randint(0,9)
+    y=random.randint(0,9)
+    while guess_board[x,y]!=0:
+        x=random.randint(0,9)
+        y=random.randint(0,9)
+    return np.array([x,y])
             
 #%%
 
@@ -172,7 +181,7 @@ plt.show()
 
 
            
-turns=40
+turns=30
 
 for turn in range(turns):
   
@@ -184,6 +193,7 @@ for turn in range(turns):
   y = int(input("Guess a column: "))
   
   guess_coord=np.array([x,y])
+  #guess_coord=less_random_guess()
 
   guess_ship(guess_coord)
 
