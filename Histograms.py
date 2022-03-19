@@ -53,30 +53,63 @@ def play_game(times,guess_strategy):
 
 #RdYlGn
 
-turns1=np.loadtxt('random_turns1.txt')
+turns1=np.loadtxt('/Users/rikke.ronnow/Documents/Year 2/I-Explore/Battleship/random_turns1.txt')
+
+turns2=np.loadtxt('/Users/rikke.ronnow/Documents/Year 2/I-Explore/Battleship/random_turns3.txt')
 
 
-turns2=np.loadtxt('random_turns2.txt')
+parity=np.loadtxt('/Users/rikke.ronnow/Desktop/parity.txt')
+
+nonparity=np.loadtxt('/Users/rikke.ronnow/Desktop/NonParity.txt')
+
+# turns1=np.append(turns1,-1)
+# turns2=np.append(turns1,)
+
+# parity=np.append(parity,0)
+# nonparity=np.append(nonparity,0)
+
+turns1=np.append(turns1,160)
+turns2=np.append(turns1,160)
+
+parity=np.append(parity,160)
+nonparity=np.append(nonparity,160)
+
+# turns2=np.loadtxt('random_turns2.txt')
 
 
-turns3=np.loadtxt('random_turns3.txt')
+# turns3=np.loadtxt('random_turns3.txt')
 
 
-turns=np.concatenate((turns1,turns2))
-turns=np.concatenate((turns,turns3))
+# turns=np.concatenate((turns1,turns2))
+# turns=np.concatenate((turns,turns3))
 
-long_turns=np.loadtxt('random_turns.txt')
-turns=np.concatenate((turns,long_turns))
+# long_turns=np.loadtxt('random_turns.txt')
+# turns=np.concatenate((turns,long_turns))
 
-plt.hist(turns,bins=20)
+cmap = plt.get_cmap('RdYlGn')
+colors = [cmap(i) for i in np.linspace(0, 1, 5)]
+
+'''plt.hist(turns1,bins=20)
+plt.hist(parity,bins=20)
+plt.hist(nonparity,bins=20)
 
 plt.ylabel('Frequency')
 plt.xlabel('Turns')
 
-plt.show()
+plt.show()'''
 
-plt.hist(turns, bins = 50, histtype='step', cumulative=True, color='C2')
+plt.hist(turns1, bins = 40, histtype='step', cumulative=True, color=colors[1],label='Random')
+plt.hist(parity, bins = 40, histtype='step', cumulative=True, color=colors[2],label='Parity')
+plt.hist(nonparity, bins = 40, histtype='step', cumulative=True, color=colors[3],label='Non parity')
+#plt.hist(turns2, bins = 40, histtype='step', cumulative=True, color=colors[1])
+
+#plt.hist(turns2, bins = 50, histtype='step', cumulative=True, color=colors[4])
+
+plt.legend()
+plt.xlim(0,100)
 plt.ylabel('Cumulative Frequency')
 plt.xlabel('Turns')
+
+plt.savefig('histogram',bbox_inches='tight',dpi=1000)
 
 plt.show()
