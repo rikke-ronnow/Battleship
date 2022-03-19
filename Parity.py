@@ -20,6 +20,7 @@ Created on Mon Feb  7 19:00:22 2022
 import numpy as np
 import random
 import os
+from RandomPlacement import ship_placement_random
 
 ship_board=np.zeros((10,10))
 guess_board=np.zeros((10,10))
@@ -142,34 +143,36 @@ def less_random_guess():
     return np.array([x,y])
 
 #%%
-
-ship_board=np.zeros((10,10))
-guess_board=np.zeros((10,10))
-
-ship_array=np.array([])
-
-ship1=Ship()
-
-ship_array=np.append(ship_array,ship1)
-
-
-ship2=Ship(3,np.array([2,1]),"Vertical")
-
-ship_array=np.append(ship_array,ship2)
-
-ship3=Ship(4, np.array([6,6]),"Horizontal")
-
-ship_array=np.append(ship_array,ship3)
-
-ship4=Ship(4, np.array([0,9]),"Horizontal")
-
-ship_array=np.append(ship_array,ship4)
-
-
-for ship in ship_array:
-    xcoord,ycoord=coordinates(ship)
-    add_ships(ship_board,xcoord,ycoord)
-
+# =============================================================================
+# 
+# ship_board=np.zeros((10,10))
+# guess_board=np.zeros((10,10))
+# 
+# ship_array=np.array([])
+# 
+# ship1=Ship()
+# 
+# ship_array=np.append(ship_array,ship1)
+# 
+# 
+# ship2=Ship(3,np.array([2,1]),"Vertical")
+# 
+# ship_array=np.append(ship_array,ship2)
+# 
+# ship3=Ship(4, np.array([6,6]),"Horizontal")
+# 
+# ship_array=np.append(ship_array,ship3)
+# 
+# ship4=Ship(4, np.array([0,9]),"Horizontal")
+# 
+# ship_array=np.append(ship_array,ship4)
+# 
+# 
+# for ship in ship_array:
+#     xcoord,ycoord=coordinates(ship)
+#     add_ships(ship_board,xcoord,ycoord)
+# 
+# =============================================================================
 
 '''guess1=np.array([0,0])    
    
@@ -241,41 +244,50 @@ def non_parity(board):
 turns=100
 l = []
 n_sim = 100
-for _ in range(n_sim):
+
+# looping a couple of simulations
+for n in range(n_sim):
+    #defining the board
     ship_board=np.zeros((10,10))
     guess_board=np.zeros((10,10))
     
-    ship_array=np.array([])
+# =============================================================================
+#     ship_array=np.array([])
+#     
+#     ship1=Ship()
+#     
+#     ship_array=np.append(ship_array,ship1)
+#     
+#     
+#     ship2=Ship(3,np.array([2,1]),"Vertical")
+#     
+#     ship_array=np.append(ship_array,ship2)
+#     
+#     ship3=Ship(4, np.array([6,6]),"Horizontal")
+#     
+#     ship_array=np.append(ship_array,ship3)
+#     
+#     ship4=Ship(4, np.array([0,9]),"Horizontal")
+#     
+#     ship_array=np.append(ship_array,ship4)
+# =============================================================================
     
-    ship1=Ship()
-    
-    ship_array=np.append(ship_array,ship1)
-    
-    
-    ship2=Ship(3,np.array([2,1]),"Vertical")
-    
-    ship_array=np.append(ship_array,ship2)
-    
-    ship3=Ship(4, np.array([6,6]),"Horizontal")
-    
-    ship_array=np.append(ship_array,ship3)
-    
-    ship4=Ship(4, np.array([0,9]),"Horizontal")
-    
-    ship_array=np.append(ship_array,ship4)
+    # creating the ship array
+    ship_array = ship_placement_random()
 
-
+    # placing the ships on the board
     for ship in ship_array:
         xcoord,ycoord=coordinates(ship)
         add_ships(ship_board,xcoord,ycoord)
-        
+    
+    # simulating the turns
     for turn in range(turns):
-      print("Turn:", turn + 1, "of", turns)
-      print("Ships left:", len(ship_array))
-      print()
+      # print("Turn:", turn + 1, "of", turns)
+      # print("Ships left:", len(ship_array))
+      # print()
       
-      
-      x, y = non_parity(guess_board)
+      # using the parity strategy to determine where to hit
+      x, y = parity(guess_board)
       
       #x = int(input("Guess an x coordinate: "))
       #y = int(input("Guess a y coordinate: "))
@@ -286,11 +298,12 @@ for _ in range(n_sim):
       
       guess_ship(guess_coord)
     
-      print(guess_board)
-      #print(ship_board)
+      # print(guess_board)
+      # print(ship_board)
       
       if np.sum(ship_board)==0:
           l += [turn]
+          print("simulation {}: {} turns".format(n, turn))
           break
     
     # End Game
@@ -300,7 +313,11 @@ for _ in range(n_sim):
       print("All the ships have been sunk. You win!")
       
 
-  
+# recording the results in a text file
+with open('parity.txt', 'w') as f:
+    f.writelines('\n'.join([str(i) for i in l]))
+
+# plotting a histogram
 import matplotlib.pyplot as plt
 plt.hist(l)
   
