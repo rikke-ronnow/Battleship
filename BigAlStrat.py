@@ -1,3 +1,5 @@
+# Probabilistic Strategy
+
 import numpy as np
 import copy
 from math import factorial

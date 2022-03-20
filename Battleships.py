@@ -110,12 +110,17 @@ def guess_ship(guess):
                 ship.updatehits()
             guess_board[guess[0],guess[1]]=2
             ship_board[guess[0],guess[1]]=0
+    
             if ship.sunk():
                 for i in range(len(xcoords)):
                     guess_board[xcoords[i],ycoords[i]]=3
-            break
+                return "Sunk"
+            else:
+                return "Hit"
+        
         else:
             guess_board[guess[0],guess[1]]=1
+            return "MIss"
 
         
 #%%
