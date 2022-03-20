@@ -53,14 +53,14 @@ def play_game(times,guess_strategy):
 
 #RdYlGn
 
-turns1=np.loadtxt('/Users/rikke.ronnow/Documents/Year 2/I-Explore/Battleship/random_turns1.txt')
+turns1=np.loadtxt('/Users/rikke.ronnow/Documents/random_turns_3.txt')
 
-turns2=np.loadtxt('/Users/rikke.ronnow/Documents/Year 2/I-Explore/Battleship/random_turns3.txt')
+#turns2=np.loadtxt('/Users/rikke.ronnow/Documents/random_turns_3.txt')
 
 
-parity=np.loadtxt('/Users/rikke.ronnow/Desktop/parity.txt')
+parity=np.loadtxt('/Users/rikke.ronnow/Documents/RandomPlacement_Parity3ships.txt')
 
-nonparity=np.loadtxt('/Users/rikke.ronnow/Desktop/NonParity.txt')
+nonparity=np.loadtxt('/Users/rikke.ronnow/Documents/NonParityRandom.txt')
 
 # turns1=np.append(turns1,-1)
 # turns2=np.append(turns1,)
@@ -69,7 +69,7 @@ nonparity=np.loadtxt('/Users/rikke.ronnow/Desktop/NonParity.txt')
 # nonparity=np.append(nonparity,0)
 
 turns1=np.append(turns1,160)
-turns2=np.append(turns1,160)
+#turns2=np.append(turns1,160)
 
 parity=np.append(parity,160)
 nonparity=np.append(nonparity,160)
