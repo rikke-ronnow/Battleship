@@ -53,14 +53,14 @@ def play_game(times,guess_strategy):
 
 #RdYlGn
 
-turns1=np.loadtxt('/Users/rikke.ronnow/Documents/random_turns_3.txt')
+turns1=np.loadtxt('/Users/rikke.ronnow/Documents/random_8x8.txt')
 
 #turns2=np.loadtxt('/Users/rikke.ronnow/Documents/random_turns_3.txt')
 
 
-parity=np.loadtxt('/Users/rikke.ronnow/Documents/RandomPlacement_Parity3ships.txt')
+parity=np.loadtxt('/Users/rikke.ronnow/Documents/parity_8x8.txt')
 
-nonparity=np.loadtxt('/Users/rikke.ronnow/Documents/NonParityRandom.txt')
+nonparity=np.loadtxt('/Users/rikke.ronnow/Documents/nonparity_8x8.txt')
 
 # turns1=np.append(turns1,-1)
 # turns2=np.append(turns1,)
@@ -106,7 +106,7 @@ plt.hist(nonparity, bins = 40, histtype='step', cumulative=True, color='k',label
 #plt.hist(turns2, bins = 50, histtype='step', cumulative=True, color=colors[4])
 
 plt.legend()
-plt.xlim(0,100)
+plt.xlim(0,64)
 plt.ylabel('Number of games')
 plt.xlabel('Turns')
 
