@@ -233,7 +233,7 @@ plt.show()
 
 
            
-turns=30
+turns=50
 
 for turn in range(turns):
   
@@ -265,6 +265,13 @@ for turn in range(turns):
 # End Game
 if np.sum(ship_board)!=0:
   print("You lose!")
+  row_labels = range(nrows)
+  col_labels = range(ncols)
+  plt.matshow(ship_board,cmap=cmap,vmin=0,vmax=8)
+  plt.title('Ships you misssed')
+  plt.xticks(range(ncols), col_labels)
+
+  plt.yticks(range(nrows), row_labels)
 else:
   print("All the ships have been sunk. You win!")
 
