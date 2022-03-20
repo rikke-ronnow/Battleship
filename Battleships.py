@@ -225,7 +225,7 @@ def ship_placement_random(l:list=[2,3,4]):
 
 turns=100
 a=[]
-for time in range(10):
+for time in range(100):
     ship_board=np.zeros((10,10))
     guess_board=np.zeros((10,10))
 
