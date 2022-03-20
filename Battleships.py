@@ -24,7 +24,7 @@ class Ship:
         self.__hits=hits
     
     def __repr__(self):
-        return "size(s)=%s position(s)=%s, orientation(s)=%s, hits=%s" % ( self.__size, self.__pos, self.__orient, self.__hits)
+        return "size=%s position=%s, orientation=%s, hits=%s" % ( self.__size, self.__pos, self.__orient, self.__hits)
     
     def __str__(self):
         return "(%s, %s, %s, %s)" % (self.__size, self.__pos, self.__orient, self.__hits)
@@ -42,7 +42,6 @@ class Ship:
         return self.__hits
     
     def updatehits(self):
-        #print('You hit a ship!')
         self.__hits=self.__hits+1
     
     def add(self,s,p,o):
@@ -54,7 +53,6 @@ class Ship:
     
     def sunk(self):
         if self.__size==self.__hits:
-            #print('You sunk a ship!')
             return True
         else:
             return False
@@ -131,11 +129,11 @@ def random_guess():
     return np.array([x,y])
 
 def less_random_guess():
-    x=random.randint(0,9)
-    y=random.randint(0,9)
+    x=random.randint(0,7)
+    y=random.randint(0,7)
     while guess_board[x,y]!=0:
-        x=random.randint(0,9)
-        y=random.randint(0,9)
+        x=random.randint(0,7)
+        y=random.randint(0,7)
     return np.array([x,y])
 
 #%%
@@ -157,10 +155,14 @@ ship_array=np.append(ship_array,ship2)
 ship3=Ship(4, np.array([6,6]),"Horizontal")
 
 ship_array=np.append(ship_array,ship3)
-
+'''
 ship4=Ship(4, np.array([0,9]),"Horizontal")
 
 ship_array=np.append(ship_array,ship4)
+
+ship5=Ship(5, np.array([4,3]),"Vertical")
+
+ship_array=np.append(ship_array,ship5)'''
 
 
 for ship in ship_array:
@@ -168,100 +170,112 @@ for ship in ship_array:
     add_ships(ship_board,xcoord,ycoord)
 
 print(ship_board)
-
-'''guess1=np.array([0,0])    
-   
-guess_ship(guess1)    
-
-guess2=np.array([0,9])    
-   
-guess_ship(guess2)  
-    
-print(ship_board)  
-print(guess_board)  
-
-guess_ship(np.array([0,0]))
-
-guess_ship(np.array([4,4]))
-
-guess_ship(random_guess())
-
-for ship in ship_array:
-    print('hits',ship.hits())
-
-print(guess_board)
-print(ship1.pos()[0])'''
 #%%%
-'''os.system('clear')
-
-turns=10
 
 
 
-for turn in range(turns):
-  print("Turn:", turn + 1, "of", turns)
-  print("Ships left:", len(ship_array))
-  print()
-  
-  #x = int(input("Guess an x coordinate: "))
-  #y = int(input("Guess a y coordinate: "))
-  
+def ship_validation(board, ship):
+    x,y = ship.pos()
+    for c in ship.pos():
+        if c < 0 or c > 7:
+            return False
+    
+    if ship.size() < 1:
+        return False
+    
+    if ship.orient() == "Horizontal":
+        if x+ship.size()-1>7:
+            return False
+        for i in range(ship.size()):
+            if board[x+i][y] != 0:
+                return False
+    elif ship.orient() == "Vertical":
+        if y+ship.size()-1>7:
+            return False
+        for i in range(ship.size()):
+            if board[x][y+i] != 0:
+                return False
+    else:
+        return False
+    return True
+    
 
-  #guess_coord=np.array([x,y])
-  guess_coord=less_random_guess()
-  
-  guess_ship(guess_coord)
+def ship_placement_random(l:list=[2,2,2]):
+    board_temp = np.zeros((8,8))
+    ship_arr = np.array([])
+    for length in l:
+        while True:
+            ship_temp = Ship(length, 
+                             np.array([random.randint(0,7),random.randint(0,7)]), 
+                             random.choice(["Horizontal", "Vertical"]))
+            if ship_validation(board_temp, ship_temp):
+                break
+        #while not ship_validation(board_temp, ship_temp):
+        #    ship_temp = Ship(length, 
+        #                     np.array([random.randint(0,9),random.randint(0,9)]), 
+        #                     random.choice(["Horizontal", "Vertical"]))
+        x_temp, y_temp = ship_temp.pos()
+        if ship_temp.orient() == "Horizontal":
+            for i in range(length):
+                board_temp[x_temp+i][y_temp] = 1
+        elif ship_temp.orient() == "Vertical":
+            for i in range(length):
+                board_temp[x_temp][y_temp+i] = 1
+        ship_arr=np.append(ship_arr,ship_temp)
+    #print(board_temp)
+    return ship_arr
 
-  print(guess_board)
-  #print(ship_board)
-  
-  if np.sum(ship_board)==0:
-      break
-
-# End Game
-if np.sum(ship_board)!=0:
-  print("You lose!")
-else:
-  print("All the ships have been sunk. You win!")
-  '''
 
 #%%
-'''
+
 turns=100
+a=[]
+for time in range(100):
+    ship_board=np.zeros((8,8))
+    guess_board=np.zeros((8,8))
 
-def play_game(times,guess_strategy):
-    a=[]
-    for time in range(times):
-        for turn in range(turns):
-          print("Turn:", turn + 1, "of", turns)
-          print("Ships left:", len(ship_array))
-          print()
+    '''ship_array=np.array([])
+    
+    ship1=Ship()
+    
+    ship_array=np.append(ship_array,ship1)
+    
+    
+    ship2=Ship(3,np.array([2,1]),"Vertical")
+    
+    ship_array=np.append(ship_array,ship2)
+    
+    ship3=Ship(4, np.array([6,6]),"Horizontal")
+    
+    ship_array=np.append(ship_array,ship3)
+    
+    ship4=Ship(4, np.array([0,9]),"Horizontal")
+    
+    ship_array=np.append(ship_array,ship4)'''
+    ship_array=ship_placement_random()
+    
+    
+    for ship in ship_array:
+        xcoord,ycoord=coordinates(ship)
+        add_ships(ship_board,xcoord,ycoord)
+    for turn in range(turns):
           
-          #x = int(input("Guess an x coordinate: "))
-          #y = int(input("Guess a y coordinate: "))
+         guess_coord=less_random_guess()
           
-        
-          guess_coord=guess_strategy
-          #guess_coord=less_random_guess()
-          
-          guess_ship(guess_coord)
-        
-          print(guess_board)
-          #print(ship_board)
-          
-          if np.sum(ship_board)==0:
-              break
-        
-        # End Game
-        if np.sum(ship_board)!=0:
-          print("You lose!")
-          a.append(turns)
-        else:
-          print("All the ships have been sunk. You win!")
-          a.append(turns)
-      
-    return np.array(a)  
- ''' 
+         guess_ship(guess_coord)
+
+         if np.sum(ship_board)==0:
+             break
+
+    if np.sum(ship_board)!=0:
+         a.append(turn)
+    else:
+         a.append(turn)  
+
 #%%
 
- 
+turns=np.array(a)
+
+np.savetxt('random_8x8.txt',turns)    
+
+

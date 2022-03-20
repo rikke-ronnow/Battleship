@@ -51,30 +51,65 @@ def play_game(times,guess_strategy):
 
 #%%
 
-turns1=np.loadtxt('random_turns1.txt')
+#RdYlGn
 
-plt.hist(turns1,bins=20)
+turns1=np.loadtxt('/Users/rikke.ronnow/Documents/random_8x8.txt')
 
-turns2=np.loadtxt('random_turns2.txt')
+#turns2=np.loadtxt('/Users/rikke.ronnow/Documents/random_turns_3.txt')
 
-plt.hist(turns2,bins=20)
 
-turns3=np.loadtxt('random_turns3.txt')
+parity=np.loadtxt('/Users/rikke.ronnow/Documents/parity_8x8.txt')
 
-plt.hist(turns3,bins=20)
+nonparity=np.loadtxt('/Users/rikke.ronnow/Documents/nonparity_8x8.txt')
 
-#%%
+# turns1=np.append(turns1,-1)
+# turns2=np.append(turns1,)
 
-turns=np.concatenate((turns1,turns2))
-turns=np.concatenate((turns,turns3))
+# parity=np.append(parity,0)
+# nonparity=np.append(nonparity,0)
 
-long_turns=np.loadtxt('turns.txt')
-turns=np.concatenate((turns,long_turns))
+turns1=np.append(turns1,160)
+#turns2=np.append(turns1,160)
 
-plt.hist(turns,bins=20)
+parity=np.append(parity,160)
+nonparity=np.append(nonparity,160)
+
+# turns2=np.loadtxt('random_turns2.txt')
+
+
+# turns3=np.loadtxt('random_turns3.txt')
+
+
+# turns=np.concatenate((turns1,turns2))
+# turns=np.concatenate((turns,turns3))
+
+# long_turns=np.loadtxt('random_turns.txt')
+# turns=np.concatenate((turns,long_turns))
+
+cmap = plt.get_cmap('RdYlGn')
+colors = [cmap(i) for i in np.linspace(0, 1, 5)]
+
+'''plt.hist(turns1,bins=20)
+plt.hist(parity,bins=20)
+plt.hist(nonparity,bins=20)
 
 plt.ylabel('Frequency')
 plt.xlabel('Turns')
 
-plt.show()
+plt.show()'''
 
+plt.hist(turns1, bins = 40, histtype='step', cumulative=True, color='g',label='Random')
+plt.hist(parity, bins = 40, histtype='step', cumulative=True, color='r',label='Parity')
+plt.hist(nonparity, bins = 40, histtype='step', cumulative=True, color='k',label='Non parity')
+#plt.hist(turns2, bins = 40, histtype='step', cumulative=True, color=colors[1])
+
+#plt.hist(turns2, bins = 50, histtype='step', cumulative=True, color=colors[4])
+
+plt.legend()
+plt.xlim(0,64)
+plt.ylabel('Number of games')
+plt.xlabel('Turns')
+
+plt.savefig('histogram',bbox_inches='tight',dpi=1000)
+
+plt.show()
