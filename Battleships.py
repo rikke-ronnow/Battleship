@@ -124,11 +124,11 @@ def random_guess():
     return np.array([x,y])
 
 def less_random_guess():
-    x=random.randint(0,9)
-    y=random.randint(0,9)
+    x=random.randint(0,7)
+    y=random.randint(0,7)
     while guess_board[x,y]!=0:
-        x=random.randint(0,9)
-        y=random.randint(0,9)
+        x=random.randint(0,7)
+        y=random.randint(0,7)
     return np.array([x,y])
 
 #%%
@@ -172,20 +172,20 @@ print(ship_board)
 def ship_validation(board, ship):
     x,y = ship.pos()
     for c in ship.pos():
-        if c < 0 or c > 9:
+        if c < 0 or c > 7:
             return False
     
     if ship.size() < 1:
         return False
     
     if ship.orient() == "Horizontal":
-        if x+ship.size()-1>9:
+        if x+ship.size()-1>7:
             return False
         for i in range(ship.size()):
             if board[x+i][y] != 0:
                 return False
     elif ship.orient() == "Vertical":
-        if y+ship.size()-1>9:
+        if y+ship.size()-1>7:
             return False
         for i in range(ship.size()):
             if board[x][y+i] != 0:
@@ -195,13 +195,13 @@ def ship_validation(board, ship):
     return True
     
 
-def ship_placement_random(l:list=[2,3,4]):
-    board_temp = np.zeros((10,10))
+def ship_placement_random(l:list=[2,2,2]):
+    board_temp = np.zeros((8,8))
     ship_arr = np.array([])
     for length in l:
         while True:
             ship_temp = Ship(length, 
-                             np.array([random.randint(0,9),random.randint(0,9)]), 
+                             np.array([random.randint(0,7),random.randint(0,7)]), 
                              random.choice(["Horizontal", "Vertical"]))
             if ship_validation(board_temp, ship_temp):
                 break
@@ -226,8 +226,8 @@ def ship_placement_random(l:list=[2,3,4]):
 turns=100
 a=[]
 for time in range(100):
-    ship_board=np.zeros((10,10))
-    guess_board=np.zeros((10,10))
+    ship_board=np.zeros((8,8))
+    guess_board=np.zeros((8,8))
 
     '''ship_array=np.array([])
     
@@ -271,6 +271,6 @@ for time in range(100):
 
 turns=np.array(a)
 
-np.savetxt('random_turns_3.txt',turns)    
+np.savetxt('random_8x8.txt',turns)    
 
 
